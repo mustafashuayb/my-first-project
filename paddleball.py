@@ -6,8 +6,8 @@ class Ball:
         self.canvas = canvas 
         self.id = canvas.create_oval(10, 10, 25, 25, fill=color) 
         self.canvas.move(self.id, 245, 100) 
-def draw(self): 
-    pass
+    def draw(self): 
+        pass
 
 tk = Tk() 
 tk.title('Bounce Game') 
