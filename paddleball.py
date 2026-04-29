@@ -5,8 +5,8 @@
 # Libaries
 from tkinter import * 
 import random 
-import time 
- 
+import time
+
  # Ball Class
 class Ball: 
     # Creating Canvas, Color and Ball
@@ -36,6 +36,9 @@ class Ball:
         # Bouncing the Ball if it Hits the Left or Right of the Canvas    
         if pos[0] <= 0 or pos[2] >= self.canvas_width: 
             self.x = self.x * -1
+    ## Changes the fill color of the ball to the color passed in the parameter
+    def change_color(self, color):
+        self.canvas.itemconfig(self.id, fill=color)
 
 
 # Tkinter Window 
@@ -53,9 +56,59 @@ tk.update()
 ## Changed Ball color from red to blue
 ball = Ball(canvas, 'blue') 
 
+## List of Colors to Change the Ball to:
+colors = [
+    "indianred", "lightcoral", "salmon", "darksalmon", "lightsalmon",
+    "crimson", "red", "firebrick", "darkred", "pink", "lightpink",
+    "hotpink", "deeppink", "mediumvioletred", "palevioletred",
+
+    "coral", "tomato", "orangered", "darkorange", "orange",
+
+    "gold", "yellow", "lightyellow", "lemonchiffon",
+    "lightgoldenrodyellow", "papayawhip", "moccasin", "peachpuff",
+    "palegoldenrod", "khaki", "darkkhaki",
+
+    "green", "lawngreen", "chartreuse", "lime", "limegreen",
+    "palegreen", "lightgreen", "mediumspringgreen", "springgreen",
+    "mediumseagreen", "seagreen", "forestgreen", "darkgreen",
+    "yellowgreen", "olivedrab", "olive", "darkolivegreen",
+    "mediumaquamarine", "darkseagreen", "lightseagreen", "darkcyan",
+    "teal",
+
+    "aqua", "cyan", "lightcyan", "paleturquoise", "aquamarine",
+    "turquoise", "mediumturquoise", "darkturquoise", "cadetblue",
+    "steelblue", "lightsteelblue", "powderblue", "lightblue",
+    "skyblue", "lightskyblue", "deepskyblue", "dodgerblue",
+    "cornflowerblue", "royalblue", "blue", "mediumblue",
+    "darkblue", "navy", "midnightblue",
+
+    "lavender", "thistle", "plum", "violet", "orchid",
+    "fuchsia", "magenta", "mediumorchid", "mediumpurple",
+    "blueviolet", "darkviolet", "darkorchid", "darkmagenta",
+    "purple", "indigo", "slateblue", "darkslateblue",
+    "mediumslateblue",
+
+    "white", "snow", "honeydew", "mintcream", "azure",
+    "aliceblue", "ghostwhite", "whitesmoke", "seashell",
+    "beige", "oldlace", "floralwhite", "ivory", "antiquewhite",
+    "linen", "lavenderblush", "mistyrose", "gainsboro",
+    "lightgray", "silver", "darkgray", "gray", "dimgray",
+    "black",
+
+    "cornsilk", "bisque", "blanchedalmond", "navajowhite",
+    "wheat", "burlywood", "tan", "rosybrown", "sandybrown",
+    "goldenrod", "darkgoldenrod", "peru", "chocolate",
+    "saddlebrown", "sienna", "brown", "maroon"
+]
+# umm I think i added a bit too much..
+
 # Main game loop
 while True: 
-    ball.draw() 
+    ball.draw()
+    ## Randomly Change the Color of the Ball Every 2 Frames so it Doesnt Look Crazy 
+    if random.randint(1, 2) == 1:
+        ball.change_color(random.choice(colors))
+
     tk.update_idletasks() 
     tk.update() 
     time.sleep(0.01)
