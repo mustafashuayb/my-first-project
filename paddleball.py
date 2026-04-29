@@ -14,11 +14,16 @@ class Ball:
         self.canvas = canvas 
     
         self.id = canvas.create_oval(10, 10, 25, 25, fill=color) 
-        self.canvas.move(self.id, 245, 100)
+        ## Randomly Choosing the Starting X and Y Position of the Ball Between 50 and 450 for X and 50 and 200 for Y
+        start_x = random.randrange(50, 450)
+        start_y = random.randrange(50, 200)
+        self.canvas.move(self.id, start_x, start_y)
+
         # Randomly Choosing the Starting X Direction of the Ball
         starts = [-3, -2, -1, 1, 2, 3] 
         self.x = random.choice(starts)
-        self.y = -3 
+        self.y = -3
+
         self.canvas_height = self.canvas.winfo_height()
         self.canvas_width = self.canvas.winfo_width()
         
@@ -36,6 +41,7 @@ class Ball:
         # Bouncing the Ball if it Hits the Left or Right of the Canvas    
         if pos[0] <= 0 or pos[2] >= self.canvas_width: 
             self.x = self.x * -1
+
     ## Changes the fill color of the ball to the color passed in the parameter
     def change_color(self, color):
         self.canvas.itemconfig(self.id, fill=color)
@@ -46,9 +52,11 @@ tk = Tk()
 tk.configure(bg="Black")
 tk.title('Bounce Game') 
 tk.resizable(0, 0) 
-tk.wm_attributes('-topmost', 1) 
+tk.wm_attributes('-topmost', 1)
+
 ## Added bg="Black" to make the background of the window black instead of white.
-canvas = Canvas(tk, width=500, height=400, bd=0, highlightthickness=0, bg="Black") 
+canvas = Canvas(tk, width=500, height=400, bd=0, highlightthickness=0, bg="Black")
+
 canvas.pack() 
 tk.update() 
 
