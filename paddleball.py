@@ -16,7 +16,7 @@ class Ball:
         self.paddle = paddle
 
         self.id = canvas.create_oval(10, 10, 25, 25, fill=color) 
-        ## Randomly Choosing the Starting X and Y Position of the Ball Between 50 and 450 for X and 50 and 200 for Y
+        ## Randomly Choosing the Starting X and Y Position of the Ball
         start_x = random.randrange(50, 450)
         start_y = random.randrange(50, 200)
         self.canvas.move(self.id, start_x, start_y)
@@ -28,6 +28,13 @@ class Ball:
 
         self.canvas_height = self.canvas.winfo_height()
         self.canvas_width = self.canvas.winfo_width()
+    
+    def hit_paddle(self, pos): 
+        paddle_pos = self.canvas.coords(self.paddle.id) 
+        if pos[2] >= paddle_pos[0] and pos[0] <= paddle_pos[2]: 
+            if pos[3] >= paddle_pos[1] and pos[3] <= paddle_pos[3]: 
+                return True 
+        return False
         
     def draw(self):
         # Moving the Ball in the X and Y Direction 
@@ -43,6 +50,10 @@ class Ball:
         # Bouncing the Ball if it Hits the Left or Right of the Canvas    
         if pos[0] <= 0 or pos[2] >= self.canvas_width: 
             self.x = self.x * -1
+        
+        # Bouncing the Ball if it Hits the Paddle
+        if self.hit_paddle(pos) == True:
+            self.y *= -1
 
     ## Changes the fill color of the ball to the color passed in the parameter
     def change_color(self, color):
