@@ -28,6 +28,7 @@ class Ball:
 
         self.canvas_height = self.canvas.winfo_height()
         self.canvas_width = self.canvas.winfo_width()
+        self.hit_bottom = False
     
     def hit_paddle(self, pos): 
         paddle_pos = self.canvas.coords(self.paddle.id) 
@@ -41,11 +42,12 @@ class Ball:
         self.canvas.move(self.id, self.x, self.y) 
         pos = self.canvas.coords(self.id)
 
-        # Bouncing the Ball if it Hits the Top or Bottom of the Canvas
+        # Bouncing the Ball if it Hits the Top of the Canvas
         if pos[1] <= 0: 
-            self.y = 1      
+            self.y = 1
+        # Bouncing the Ball if it Hits the Bottom of the Canvas      
         if pos[3] >= self.canvas_height: 
-            self.y = -1
+            self.hit_bottom = True
             
         # Bouncing the Ball if it Hits the Left or Right of the Canvas    
         if pos[0] <= 0 or pos[2] >= self.canvas_width: 
@@ -149,12 +151,13 @@ colors = [
 # umm I think i added a bit too much..
 
 # Main game loop
-while True: 
-    ball.draw()
-    ## Randomly Change the Color of the Ball Every 2 Frames so it Doesnt Look Crazy 
-    if random.randint(1, 2) == 1:
-        ball.change_color(random.choice(colors))
-    paddle.draw()
+while True:
+    if ball.hit_bottom == False:
+        paddle.draw() 
+        ball.draw() 
+        if random.randint(1, 2) == 1:
+            ball.change_color(random.choice(colors))
+    
     tk.update_idletasks() 
     tk.update() 
     time.sleep(0.01)
