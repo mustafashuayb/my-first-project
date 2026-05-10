@@ -183,7 +183,7 @@ while True:
             ball.change_color(random.choice(colors))
 
     # If the ball hits the bottom it should start adding one every loop to the game_over_delay variable.
-    if ball.hit_bottom == True:
+    if ball.hit_bottom == True and game_over_delay < 100:
         game_over_delay += 1
 
     # Once the game_over_delay variable reaches 100 (around 1 second),
