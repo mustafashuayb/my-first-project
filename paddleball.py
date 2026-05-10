@@ -161,6 +161,14 @@ colors = [
 ]
 # The colors list contains a wide variety of color options for the ball.
 
+## Game Over Text
+game_over_text = canvas.create_text(250, 200, text="Game Over", fill="white", font=("Arial", 30))
+
+## Keeps the text hidden until the game is actually over
+canvas.itemconfig(game_over_text, state='hidden')
+
+# Game Over Delay
+game_over_delay = 0
 
 # Main game loop
 while True:
@@ -168,9 +176,20 @@ while True:
     ## Draw the Paddle and the Ball, and Randomly Change the Color of the Ball
     if paddle.game_started == True and ball.hit_bottom == False:
         paddle.draw() 
-        ball.draw() 
+        ball.draw()
+
+        # Change the color of the ball every 2 milliseconds to a random color from the colors list (line 119-161)
         if random.randint(1, 2) == 1:
             ball.change_color(random.choice(colors))
+
+    # If the ball hits the bottom it should start adding one every loop to the game_over_delay variable.
+    if ball.hit_bottom == True:
+        game_over_delay += 1
+
+    # Once the game_over_delay variable reaches 100 (around 1 second),
+    # the "Game Over" text should be displayed on the canvas.
+    if game_over_delay >= 100:
+        canvas.itemconfig(game_over_text, state='normal')
 
     tk.update_idletasks() 
     tk.update() 
