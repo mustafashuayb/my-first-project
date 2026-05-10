@@ -83,7 +83,7 @@ class Paddle:
     ## When the Left Mouse Button is Clicked, the Game Starts
     def start_game(self, evt):
         self.game_started = True
-
+        
     # When the Left Arrow Key is Pressed, the turn_left Method is Called and the X Direction of the Paddle is Set to -2   
     def turn_left(self, evt): 
         self.x = -2
