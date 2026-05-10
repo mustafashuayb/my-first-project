@@ -10,7 +10,7 @@ from turtle import pos
 
  # Ball Class
 class Ball: 
-    # Creating Canvas, Color and Ball (adn now paddle)
+    # Creating Canvas, Color and Ball (and now paddle)
     def __init__(self, canvas, paddle, color): 
         self.canvas = canvas 
         self.paddle = paddle
@@ -65,18 +65,24 @@ class Ball:
 class Paddle:
     def __init__(self, canvas, color):
         self.canvas = canvas
+        # Creating the Paddle and Placing it at the Bottom of the Canvas
         self.id = canvas.create_rectangle(0, 0, 100, 10, fill=color)
         self.canvas.move(self.id, 200, 300)
         self.x = 0
         self.canvas_width = self.canvas.winfo_width()
+
+        # Binding the Left and Right Arrow Keys to the turn_left and turn_right Methods
         self.canvas.bind_all('<KeyPress-Left>', self.turn_left)
         self.canvas.bind_all('<KeyPress-Right>', self.turn_right)
-        
+
+    # When the Left Arrow Key is Pressed, the turn_left Method is Called and the X Direction of the Paddle is Set to -2   
     def turn_left(self, evt): 
-        self.x = -2 
+        self.x = -2
+
+    # When the Right Arrow Key is Pressed, the turn_right Method is Called and the X Direction of the Paddle is Set to 2 
     def turn_right(self, evt): 
         self.x = 2
-
+    # Moving the Paddle in the X Direction and Bouncing it if it Hits the Left or Right of the Canvas
     def draw(self): 
             self.canvas.move(self.id, self.x, 0) 
             pos = self.canvas.coords(self.id) 
@@ -148,16 +154,17 @@ colors = [
     "goldenrod", "darkgoldenrod", "peru", "chocolate",
     "saddlebrown", "sienna", "brown", "maroon"
 ]
-# umm I think i added a bit too much..
+# The colors list contains a wide variety of color options for the ball.
 
 # Main game loop
 while True:
+    # If the Ball has not Hit the Bottom of the Canvas, Draw the Paddle and the Ball, and Randomly Change the Color of the Ball
     if ball.hit_bottom == False:
         paddle.draw() 
         ball.draw() 
         if random.randint(1, 2) == 1:
             ball.change_color(random.choice(colors))
-    
+
     tk.update_idletasks() 
     tk.update() 
     time.sleep(0.01)
