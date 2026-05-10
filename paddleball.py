@@ -25,10 +25,14 @@ class Ball:
         self.canvas_width = self.canvas.winfo_width()
         self.hit_bottom = False
     
+    ## If the bottom of the ball and the top of the paddle are at equal cords, add one to the score and return true, otherwise return false.
     def hit_paddle(self, pos): 
+        global score
         paddle_pos = self.canvas.coords(self.paddle.id) 
         if pos[2] >= paddle_pos[0] and pos[0] <= paddle_pos[2]: 
             if pos[3] >= paddle_pos[1] and pos[3] <= paddle_pos[3]: 
+                score += 1
+                self.canvas.itemconfig(score_text, text=f"Score: {score}")
                 return True 
         return False
         
@@ -164,11 +168,22 @@ colors = [
 ## Game Over Text
 game_over_text = canvas.create_text(250, 200, text="Game Over", fill="white", font=("Arial", 30))
 
+# Score Text
+score_text = canvas.create_text(
+    450, 20,
+    text="Score: 0",
+    fill="white",
+    font=("Arial", 14)
+)
+
 ## Keeps the text hidden until the game is actually over
 canvas.itemconfig(game_over_text, state='hidden')
 
-# Game Over Delay
+## Game Over Delay
 game_over_delay = 0
+
+## Score Variable
+score = 0
 
 # Main game loop
 while True:
@@ -182,12 +197,12 @@ while True:
         if random.randint(1, 2) == 1:
             ball.change_color(random.choice(colors))
 
-    # If the ball hits the bottom it should start adding one every loop to the game_over_delay variable.
+    ## If the ball hits the bottom it should start adding one every loop to the game_over_delay variable.
     if ball.hit_bottom == True and game_over_delay < 100:
         game_over_delay += 1
 
-    # Once the game_over_delay variable reaches 100 (around 1 second),
-    # the "Game Over" text should be displayed on the canvas.
+    ## Once the game_over_delay variable reaches 100 (around 1 second),
+    ## the "Game Over" text should be displayed on the canvas.
     if game_over_delay >= 100:
         canvas.itemconfig(game_over_text, state='normal')
 
