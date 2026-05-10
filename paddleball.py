@@ -1,8 +1,3 @@
-# Paddle Ball Game
-
-# If you see me use "##" it means that i am doing a programming puzzle.
-
-# Libaries
 from tkinter import * 
 import random 
 import time
@@ -71,9 +66,19 @@ class Paddle:
         self.x = 0
         self.canvas_width = self.canvas.winfo_width()
 
+        ## Variable to Check if the Game has Started Yet
+        self.game_started = False
+
         # Binding the Left and Right Arrow Keys to the turn_left and turn_right Methods
         self.canvas.bind_all('<KeyPress-Left>', self.turn_left)
         self.canvas.bind_all('<KeyPress-Right>', self.turn_right)
+
+        ## Binding the Left Mouse Button to the start_game Method
+        self.canvas.bind_all('<Button-1>', self.start_game)
+
+    ## When the Left Mouse Button is Clicked, the Game Starts
+    def start_game(self, evt):
+        self.game_started = True
 
     # When the Left Arrow Key is Pressed, the turn_left Method is Called and the X Direction of the Paddle is Set to -2   
     def turn_left(self, evt): 
@@ -156,10 +161,12 @@ colors = [
 ]
 # The colors list contains a wide variety of color options for the ball.
 
+
 # Main game loop
 while True:
-    # If the Ball has not Hit the Bottom of the Canvas, Draw the Paddle and the Ball, and Randomly Change the Color of the Ball
-    if ball.hit_bottom == False:
+    ## If the Game has Started and the Ball has not Hit the Bottom of the Canvas,
+    ## Draw the Paddle and the Ball, and Randomly Change the Color of the Ball
+    if paddle.game_started == True and ball.hit_bottom == False:
         paddle.draw() 
         ball.draw() 
         if random.randint(1, 2) == 1:
